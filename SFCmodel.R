@@ -5,66 +5,11 @@ rm(list =ls(all=TRUE))
 T<-51
 Scenarios<-3
 
-#symbols of endogenous variables
-Symbols<-c("W","Y_C", "CO", "D", "Y", "TP", "RP", "DP",
-           "I", "K", "L", "BP", "D_red", "Y_star", "u", "g_Y",
-           "lev")
-
-#model equations
-Equations<-function(t){
-  
-  #HOUSEHOLDS
-  #wage income of households
-  W[t]<<-s_W*Y[t] #Eq 1
-  #capital income of households
-  Y_C[t]<<-DP[t]+BP[t]+int_D*D[t-1] #Eq 2 
-  #consumption expenditures
-  CO[t]<<-c_1*W[t-1]+c_2*Y_C[t-1]+c_3*D[t-1] #Eq 3
-  #deposits (identity)
-  D[t]<<- D[t-1]+W[t]+Y_C[t]-CO[t] #Eq 4
-  
-  #FIRMS
-  #output
-  Y[t]<<-CO[t]+I[t] #Eq 5
-  #total profits of firms (identity)
-  TP[t]<<-Y[t]-W[t]-int_L*L[t-1] #Eq 6
-  #retained profits
-  RP[t]<<-s_F*TP[t-1] #Eq 7
-  #distributed profits (identity)
-  DP[t]<<-TP[t]-RP[t] #Eq 8
-  #investment
-  I[t]<<-g_K*K[t-1] #Eq 9
-  #capital stock
-  K[t]<<-K[t-1]+I[t] #Eq 10
-  #loans (identity)
-  L[t]<<-L[t-1]+I[t]-RP[t] #Eq 11
-  
-  #BANKS
-  #profits of banks (identity)
-  BP[t]<<-int_L*L[t-1]-int_D*D[t-1] #Eq 12
-  #deposits (redundant identity)
-  D_red[t]<<-L[t] #Eq 13
-  
-  #AUXILIARY EQUATIONS
-  #potential output
-  Y_star[t]<<-v*K[t] #Eq 14
-  #capacity utilisation
-  u[t]<<-Y[t]/Y_star [t] #Eq 15
-  #growth rate of output
-  #leverage ratio
-  
-  
-  
-  
-  
-    
-}
-
-
-
-
-
-
+#################################
+#Symbols of endogenous variables
+#################################
+Symbols<-c("W","Y_C","CO","D","Y","TP","RP","DP","I","K","L","BP","D_red",
+           "Y_star","u","g_Y","lev")
 
 ##########
 #Equations
