@@ -104,4 +104,27 @@ for (j in 1:Scenarios){
   #################
   matrixname<-paste("Table",j, sep="")
   values<-setNames(data.frame(matrix(ncol = length(Symbols), nrow = T)), Symbols)
-  for (v in 1:length(Symbols)){values[,v]<
+for (v in 1:length(Symbols)){values[,v]<-eval(parse(text=(paste(noquote(Symbols[v])))))} assign (matrixname,round(values, 4))
+}
+#charts
+sce1="Baseline - steady state"
+sce2="Interest rate shock"
+sce3="Interest rate shock upon sensitivty to the rate of profit"
+col1="#000000" col2="#0072B2"
+col3="#D55E00"
+Chart<-function(variable,label, min,max, legend_position){
+plot(table1[,c(variable)], type="l", col=col1, lwd=1.7, ylab=label, ylim=c(min, max), cex.lab=1.2, xlab= "Period", xaxt="n",lty=1)
+axis(side=1, at=c(2,12,22,32,42,52,62,72,82))
+if (Scenarios>=2){lines(table1[,c(variable)], lty=3, col=col2, lwd=1.7)}
+if (Scenarios>=3){lines(table2[,c(variable)], lty=2, col=col3, lwd=1.7)}
+if (Scenarios>=3){legend(legend_position, legend=c(sce1, sce2, sce3), lty=c(1, 3, 2), col=c(col1,
+col2, col3), lwd=c(1.7,1.7,1.7), bty="n",cex = 0.8)} }
+#evolution of the growth rate of output
+Chart(variable="g_Y",label="Growth rate of output",min=-0.75,max=0.06,"bottomright")
+#evolution of the leverage of firms
+Chart(variable="lev",label="Firm leverage",min=-350,max=160, "bottomright")
+#evolution of the industrial CO2 emissions
+Chart(variable="EMIS_IN",label="Industrial CO2 emissions",min=0.0,max=300, "bottomright")
+
+
+                               
